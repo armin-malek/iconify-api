@@ -55,15 +55,20 @@ export const appConfig: AppConfig = {
 /**
  * HTTP headers to send to visitors
  */
+// Load env variable (e.g. ALLOWED_ORIGINS="https://morabiyan.com,https://admin.morabiyan.com")
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map(o => o.trim())
+  : ["*"]; // fallback to * if not defined
+
 export const httpHeaders: string[] = [
-	// CORS
-	'Access-Control-Allow-Origin: *',
-	'Access-Control-Allow-Methods: GET, OPTIONS',
-	'Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding',
-	'Access-Control-Max-Age: 86400',
-	'Cross-Origin-Resource-Policy: cross-origin',
-	// Cache
-	'Cache-Control: public, max-age=604800, min-refresh=604800, immutable',
+  // CORS
+  `Access-Control-Allow-Origin: ${allowedOrigins.join(" ")}`,
+  "Access-Control-Allow-Methods: GET, OPTIONS",
+  "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding",
+  "Access-Control-Max-Age: 86400",
+  "Cross-Origin-Resource-Policy: cross-origin",
+  // Cache
+  "Cache-Control: public, max-age=604800, min-refresh=604800, immutable",
 ];
 
 /**
